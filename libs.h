@@ -83,7 +83,7 @@
 #endif
 
 // I2C
-#if 0
+#if 1
 #include "sdk/src/w2/src/w2_src.h"
 #include "sdk/src/w2/src/w2_configure.c"
 #include "sdk/src/w2/src/w2_master_cur_address_read.c"

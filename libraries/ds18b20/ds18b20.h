@@ -1,10 +1,3 @@
-/*
- * ds18b20.h
- *
- *  Created on: 20/09/2016
- *      Author: andru
- */
-
 #ifndef DS18B20_H_
 #define DS18B20_H_
 

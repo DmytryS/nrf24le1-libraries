@@ -1,22 +1,22 @@
+#include "../libs.h"
+#include "../nRFLE.c"
+#include "../libraries/bh1750/bh1750.c"
+
 #define chclient 			3 						// client number
 #define SPEED 				1 						// 1 - 250kb , 2 - 1mb , 3 - 2mb.
 #define PAlevel 			3 						// power 0..3
 #define CHANNEL 			75						// 123
 #define Crclength 	    	2 						// 0 - crc off ,1 - 8bit ,2 - 16bit
 #define AutoAck 		    false 	    			// disable hardware confirmation
-#define SEND_INTERVAL 		300         			//sec
-#define W2SCL	            GPIO_PIN_ID_P0_4		// P0.4 - BH1750 2-wire SCL
-#define W2SDA	            GPIO_PIN_ID_P0_5		// P0.5 - BH1750 2-wire SDA
+#define SEND_INTERVAL 		300         			// send interval in seconds
+
+//#define W2SCL	            GPIO_PIN_ID_P0_4		// P0.4 - BH1750 2-wire SCL
+//#define W2SDA	            GPIO_PIN_ID_P0_5		// P0.5 - BH1750 2-wire SDA
 
 //#define POF PWR_CLK_MGMT_PWR_FAILURE_CONFIG_OPTION_POF_THRESHOLD_2_1V
 //#define POF PWR_CLK_MGMT_PWR_FAILURE_CONFIG_OPTION_POF_THRESHOLD_2_3V
 //#define POF PWR_CLK_MGMT_PWR_FAILURE_CONFIG_OPTION_POF_THRESHOLD_2_5V
 #define POF PWR_CLK_MGMT_PWR_FAILURE_CONFIG_OPTION_POF_THRESHOLD_2_7V
-
-
-#include "../libs.h"
-#include "../nRFLE.c"
-#include "../libraries/bh1750/bh1750.c"
 
 typedef struct{
 	unsigned char identifier;// don't change
@@ -35,9 +35,9 @@ void main()
 {
 	__xdata __at(0x0100) long countloop;
 	__xdata __at(0x0110) int sleep_counter;
-
+	
 	uint16_t value;
-	uin8t_t ret;
+	uint8_t ret;
 
 	CLKLFCTRL = 1;
 	rtc2_configure(RTC2_CONFIG_OPTION_COMPARE_MODE_0_RESET_AT_IRQ , 65535); //65535=2 сек, 32767=1 сек
