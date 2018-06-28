@@ -1,10 +1,3 @@
-/*
- * crc8.c
- *
- *  Created on: 20/09/2016
- *      Author: andru
- */
-
 #include <stdint.h>
 
 #include "crc8.h"

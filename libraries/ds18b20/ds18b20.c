@@ -4,8 +4,10 @@
 #include "delay.h"
 #include "interrupt.h"
 
-#include "../crc8/crc8.h"
+#include "../crc8/crc8.c"
 #include "ds18b20.h"
+
+#define DSPIN	GPIO_PIN_ID_P1_3
 
 static uint8_t OneWireReset(void)
 {
