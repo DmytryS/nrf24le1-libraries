@@ -4,7 +4,7 @@
 #include "delay.h"
 #include "interrupt.h"
 
-#include "..\crc8\crc8.h"
+#include "../crc8/crc8.h"
 #include "ds18b20.h"
 
 static uint8_t OneWireReset(void)

@@ -5,7 +5,8 @@
 #define Crclength 	    	2 						// 0 - crc off ,1 - 8bit ,2 - 16bit
 #define AutoAck 		    false 	    			// disable hardware confirmation
 #define SEND_INTERVAL 		300         			//sec
-#define DSPIN 	            GPIO_PIN_ID_P1_3        // ds18b20 data pin
+#define W2SCL	            GPIO_PIN_ID_P0_4		// P0.4 - BH1750 2-wire SCL
+#define W2SDA	            GPIO_PIN_ID_P0_5		// P0.5 - BH1750 2-wire SDA
 
 //#define POF PWR_CLK_MGMT_PWR_FAILURE_CONFIG_OPTION_POF_THRESHOLD_2_1V
 //#define POF PWR_CLK_MGMT_PWR_FAILURE_CONFIG_OPTION_POF_THRESHOLD_2_3V
@@ -22,7 +23,7 @@ typedef struct{
 	unsigned char powerControl;
 	long count;
 	unsigned char error;
-	int temp;
+	int light;
 }
 nf1;
 nf1 clientnf;
@@ -35,6 +36,7 @@ void main()
 	__xdata __at(0x0100) long countloop;
 	__xdata __at(0x0110) int sleep_counter;
 
+	uint16_t value;
 	uin8t_t ret;
 
 	CLKLFCTRL = 1;
@@ -73,12 +75,13 @@ void main()
 
 	clientnf.identifier=chclient;
 
-
-	ret = ds18b20_read(&DSTemp);
-	if (ret == DS_NO_ERROR) {
-		clientnf.temp = DSTemp;
+	bh1750_init();
+	ret = bh1750_read(&value);
+	bh1750_stop();
+	if (ret == BH1750_NO_ERROR) {
+		clientnf.light = value;
 	} else {
-		clientnf.temp = 0;
+		clientnf.light = 0;
 	}
 	clientnf.error = ret;
 

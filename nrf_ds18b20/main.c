@@ -82,18 +82,6 @@ void main()
 	}
 	clientnf.error = ret;
 
-	/*
-	adc_power_up();
-	adc_configure((uint16_t)
-			ADC_CONFIG_OPTION_RESOLUTION_10_BITS
-			| ADC_CONFIG_OPTION_REF_SELECT_VDD
-			| ADC_CONFIG_OPTION_RESULT_JUSTIFICATION_RIGHT
-			| ADC_CONFIG_OPTION_ACQ_TIME_12_US
-	);
-	clientnf.voltage = adc_start_single_conversion_get_value(VBATCH);
-	adc_power_down();
-	*/
-
 	if(pwr_clk_mgmt_is_vdd_below_bor_threshold()) { // power control
 		clientnf.powerControl = 1; // < 2.7
 	}else{

@@ -1,10 +1,3 @@
-/*
- * bh1750.h
- *
- *  Created on: 21/09/2016
- *      Author: andru
- */
-
 #ifndef BH1750_H_
 #define BH1750_H_
 

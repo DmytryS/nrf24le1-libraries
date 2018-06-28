@@ -1,17 +1,8 @@
-/*
- * bh1750.c
- *
- *  Created on: 21/09/2016
- *      Author: andru
- *
- *      BH1750 - nRF24LE1 light sensor driver
- *
- */
-
 #define BH1750_ADDR 		0x23 // device address
 #define BH1750_PWR_DOWN		0x0	 // No active state.
 #define BH1750_CONT_HMODE	0x10 // Continuously H-Resolution Mode
 #define BH1750_DELAY		200	 // wait results (datasheet says max. 180ms)
+#include <stdint.h>
 
 #include "delay.h"
 #include "w2.h"
