@@ -1,0 +1,16 @@
+# SDCC stuff
+*.lnk
+*.lst
+*.map
+*.mem
+*.rel
+*.rst
+*.sym
+*.asm
+
+*/dep/
+*/lib/
+*/obj/
+
+# Generated makefile
+Makefile.gen

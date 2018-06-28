@@ -1,0 +1,4 @@
+
+[submodule "sdk"]
+	path = sdk
+	url = https://github.com/DeanCording/nRF24LE1_SDK.git
