@@ -1,3 +1,6 @@
 .vscode
 SDCC
 hex2bin_conv
+libiconv2.dll
+libintl3.dll
+make.exe
