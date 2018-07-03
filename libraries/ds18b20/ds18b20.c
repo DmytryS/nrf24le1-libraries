@@ -34,8 +34,7 @@ static uint8_t OneWireReset(void)
 	uint8_t r = 1;
 
 	gpio_pin_configure(DSPIN,
-		GPIO_PIN_CONFIG_OPTION_DIR_OUTPUT
-		GPIO_PIN_CONFIG_OPTION_OUTPUT_VAL_CLEAR
+		GPIO_PIN_CONFIG_OPTION_DIR_OUTPUT | GPIO_PIN_CONFIG_OPTION_OUTPUT_VAL_CLEAR
 	);
 	delay_us(480);
 	gpio_pin_configure(
@@ -55,8 +54,7 @@ static void OneWireOutByte(uint8_t d)
     
 	gpio_pin_configure(
 		DSPIN,
-	   	GPIO_PIN_CONFIG_OPTION_DIR_OUTPUT
-        GPIO_PIN_CONFIG_OPTION_OUTPUT_VAL_SET
+	   	GPIO_PIN_CONFIG_OPTION_DIR_OUTPUT | GPIO_PIN_CONFIG_OPTION_OUTPUT_VAL_SET
 	);
 
 	for(n = 8; n > 0; n--) {
@@ -89,8 +87,7 @@ static uint8_t OneWireInByte(void)
 	for (n = 0; n < 8; n++) {
 		gpio_pin_configure(
 			DSPIN,
-			GPIO_PIN_CONFIG_OPTION_DIR_OUTPUT
-			GPIO_PIN_CONFIG_OPTION_OUTPUT_VAL_CLEAR
+			GPIO_PIN_CONFIG_OPTION_DIR_OUTPUT | GPIO_PIN_CONFIG_OPTION_OUTPUT_VAL_CLEAR
 		);
 		delay_us(1);
 		gpio_pin_configure(
