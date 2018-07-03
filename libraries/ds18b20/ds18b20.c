@@ -49,38 +49,35 @@ static uint8_t OneWireReset(void)
 static void OneWireOutByte(uint8_t d)
 {
 	uint8_t n;
-
+	interrupt_control_global_disable();
+        gpio_pin_configure(DSPIN,
+	   GPIO_PIN_CONFIG_OPTION_DIR_OUTPUT
+                | GPIO_PIN_CONFIG_OPTION_OUTPUT_VAL_SET);
 	for(n = 8; n > 0; n--) {
 		if (d & 0x01) {
-		   gpio_pin_configure(DSPIN,
-				   GPIO_PIN_CONFIG_OPTION_DIR_OUTPUT
-				   | GPIO_PIN_CONFIG_OPTION_OUTPUT_VAL_CLEAR
-		   );
+                   gpio_pin_val_clear(DSPIN);
 		   delay_us(1);
-		   gpio_pin_configure(DSPIN,
-				   GPIO_PIN_CONFIG_OPTION_DIR_INPUT
-		   );
-		   delay_us(50);
+                   gpio_pin_val_set(DSPIN);
+		   delay_us(49);
 		}
 		else {
-    	  gpio_pin_configure(DSPIN,
-    			  GPIO_PIN_CONFIG_OPTION_DIR_OUTPUT
-				  | GPIO_PIN_CONFIG_OPTION_OUTPUT_VAL_CLEAR
-    	  );
-    	  delay_us(50);
-    	  gpio_pin_configure(DSPIN,
-    			  GPIO_PIN_CONFIG_OPTION_DIR_INPUT
-    	  );
-    	  delay_us(1);
+                   gpio_pin_val_clear(DSPIN);
+                    delay_us(49);
+                   gpio_pin_val_set(DSPIN);
+                    delay_us(1);
 		}
 		d = d >> 1;
 	}
+
+        gpio_pin_configure(DSPIN,
+	   GPIO_PIN_CONFIG_OPTION_DIR_INPUT);
+	interrupt_control_global_enable();
 }
 
 static uint8_t OneWireInByte(void)
 {
 	uint8_t d = 0, n, b = 0;
-
+	interrupt_control_global_disable();
 	for (n = 0; n < 8; n++) {
 		gpio_pin_configure(DSPIN,
 				GPIO_PIN_CONFIG_OPTION_DIR_OUTPUT
@@ -90,11 +87,12 @@ static uint8_t OneWireInByte(void)
 		gpio_pin_configure(DSPIN,
 				GPIO_PIN_CONFIG_OPTION_DIR_INPUT
 		);
-		delay_us(2);
+		//delay_us(1); //Убираем совсем задержку перед чтением
 		b = gpio_pin_val_read(DSPIN);
 		delay_us(50);
 		d = (d >> 1) | (b << 7);
 	}
+	interrupt_control_global_enable();
 	return d;
 }
 

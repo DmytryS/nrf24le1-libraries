@@ -8,10 +8,11 @@
 #define CHANNEL 			75						// 1-123
 #define Crclength 	    	2 						// 0 - crc off ,1 - 8bit ,2 - 16bit
 #define AutoAck 		    false 	    			// disable hardware confirmation
-#define SEND_INTERVAL 		300         			// send interval in seconds
+#define SEND_INTERVAL 		300         				// send interval in seconds
 
 #define DHTPIN 	            GPIO_PIN_ID_P1_3
 #define DHT_POWER_PIN 	    GPIO_PIN_ID_P0_6
+#define VBATCH				ADC_CHANNEL_AIN3		// P0.3 - VBAT
 
 //#define POF PWR_CLK_MGMT_PWR_FAILURE_CONFIG_OPTION_POF_THRESHOLD_2_1V
 //#define POF PWR_CLK_MGMT_PWR_FAILURE_CONFIG_OPTION_POF_THRESHOLD_2_3V
@@ -25,6 +26,7 @@ typedef struct{
 	unsigned char error;
 	int temp;
 	int hum;
+	double batAdc;
 }
 nf1;
 nf1 clientnf;
@@ -91,6 +93,19 @@ void main()
 		clientnf.hum = 0;
 	}
 	clientnf.error = ret;
+
+	
+	adc_power_up();
+	/*adc_configure((uint16_t)
+			ADC_CONFIG_OPTION_RESOLUTION_10_BITS
+			| ADC_CONFIG_OPTION_REF_SELECT_VDD
+			| ADC_CONFIG_OPTION_RESULT_JUSTIFICATION_RIGHT
+			| ADC_CONFIG_OPTION_ACQ_TIME_12_US
+	);*/
+	adc_configure (ADC_CONFIG_OPTION_RESOLUTION_10_BITS);
+	clientnf.batAdc = adc_start_single_conversion_get_value(VBATCH) / 35;
+	// clientnf.solarAdc = 312.32 / adc_start_single_conversion_get_value(VSOLARCH);
+	adc_power_down();
 
 	if(pwr_clk_mgmt_is_vdd_below_bor_threshold()) { // power control
 		clientnf.powerControl = 1; // < 2.7

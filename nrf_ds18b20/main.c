@@ -4,7 +4,7 @@
 #define CHANNEL 			75						// 123
 #define Crclength 	    	2 						// 0 - crc off ,1 - 8bit ,2 - 16bit
 #define AutoAck 		    false 	    			// disable hardware confirmation
-#define SEND_INTERVAL 		300         			//sec
+#define SEND_INTERVAL 		5         			//sec
 #define DSPIN 	            GPIO_PIN_ID_P1_3        // ds18b20 data pin
 
 //#define POF PWR_CLK_MGMT_PWR_FAILURE_CONFIG_OPTION_POF_THRESHOLD_2_1V
